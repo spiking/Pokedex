@@ -14,7 +14,6 @@ class InfoVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = "Info"
     }
 

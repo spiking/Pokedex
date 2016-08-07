@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="q7e-L1-o1d">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -19,10 +18,11 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" showsCancelButton="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L4Y-5A-BeH">
+                            <searchBar contentMode="redraw" searchBarStyle="prominent" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L4Y-5A-BeH">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dIW-8H-1Gp">
@@ -48,7 +48,7 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="297" translatesAutoresizingMaskIntoConstraints="NO" id="qDI-4n-Dkx">
                                                     <rect key="frame" x="0.0" y="0.0" width="110" height="82"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAa-gV-iKm">
                                                     <rect key="frame" x="0.0" y="80" width="110" height="30"/>
@@ -96,7 +96,7 @@
                     <connections>
                         <outlet property="collection" destination="dIW-8H-1Gp" id="xI9-hy-7bg"/>
                         <outlet property="searchBar" destination="L4Y-5A-BeH" id="Rcp-aY-9gH"/>
-                        <segue destination="uvm-iW-QXb" kind="show" identifier="PokemonDetailVC" id="xn9-DO-6rO"/>
+                        <segue destination="uvm-iW-QXb" kind="show" identifier="detailVC" id="xn9-DO-6rO"/>
                         <segue destination="gHl-BA-z00" kind="show" identifier="infoVC" id="Osb-5Q-MKU"/>
                     </connections>
                 </viewController>

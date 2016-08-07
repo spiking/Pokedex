@@ -30,25 +30,43 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         title = "Pokedex"
         
+        searchBar.searchBarStyle = .Minimal
+        
         searchBar.barTintColor = UIColor.clearColor()
         searchBar.backgroundImage = UIImage()
         searchBar.translucent = false
-        searchBar.tintColor = UIColor.whiteColor()
+//        searchBar.tintColor = UIColor.greenColor()
         
         searchBar.layer.borderWidth = 1
         searchBar.layer.borderColor = UIColor(red: 239/255, green: 83/255, blue: 80/255, alpha: 1.0).CGColor
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         
-        searchBar.barStyle = .Default
-        searchBar.searchBarStyle = .Minimal
+//        self.searchBar.setImage(UIImage(named: "ClearButton"), forSearchBarIcon: UISearchBarIcon.Clear, state: UIControlState.Normal)
+//        self.searchBar.setImage(UIImage(named: "ClearButton"), forSearchBarIcon: UISearchBarIcon.Clear, state: UIControlState.Highlighted)
+       
+        if let textFieldInsideSearchBar = self.searchBar.valueForKey("searchField") as? UITextField,
+            let glassIconView = textFieldInsideSearchBar.leftView as? UIImageView {
+            
+            //Magnifying glass
+            glassIconView.image = glassIconView.image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            glassIconView.tintColor = UIColor.whiteColor()
+            
+        }
         
         UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).textColor = UIColor.whiteColor()
+        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).tintColor = UIColor.whiteColor()
         
         setupInfoButton()
         setupMusicButton()
         initAudio()
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
+
     
     func setupMusicButton() {
         musicButton = UIButton(type: UIButtonType.Custom)
@@ -68,6 +86,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.navigationItem.leftBarButtonItem = barButton
     }
     
+    
+    func hideKeyboardWithSearchBar(bar:UISearchBar) {
+        bar.resignFirstResponder()
+    }
+    
     func infoBtnPressed() {
         self.performSegueWithIdentifier(SEGUE_INFO, sender: nil)
     }
@@ -75,7 +98,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func downloadPokemonData() {
         for poke in pokemon {
             poke.downloadPokemonDetails { () -> () in
-                print("Download \(poke.name)")
+            
             }
         }
     }
@@ -94,8 +117,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             musicPlayer.prepareToPlay()
             musicPlayer.numberOfLoops = -1
             musicPlayer.play()
-        } catch let err as NSError {
-            print(err.debugDescription)
+        } catch let error as NSError {
+            print(error.debugDescription)
         }
         
         if let music = NSUserDefaults.standardUserDefaults().valueForKey("MUSIC") as? String {
@@ -123,8 +146,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 pokemon.append(poke)
             }
             
-        } catch let err as NSError {
-            print(err.debugDescription)
+        } catch let error as NSError {
+            print(error.debugDescription)
         }
     }
     
@@ -139,8 +162,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             } else {
                 poke = pokemon[indexPath.row]
             }
-            
-            
             
             cell.configureCell(poke)
             return cell
@@ -162,8 +183,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             poke = pokemon[indexPath.row]
         }
         
-        print(poke.name)
-        performSegueWithIdentifier("PokemonDetailVC", sender: poke)
+        self.performSegueWithIdentifier(SEGUE_DETAILVC, sender: poke)
         
     }
     
@@ -209,18 +229,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 2.0
     }
-    //
-    //    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-    //        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    //    }
-    
-    
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         view.endEditing(true)
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.characters.count == 0 {
+            performSelector(#selector(ViewController.hideKeyboardWithSearchBar(_:)), withObject:searchBar, afterDelay:0)
+            inSearchMode = false
+            collection.reloadData()
+            return
+        }
+        
         if searchBar.text == nil || searchBar.text == "" {
             inSearchMode = false
             view.endEditing(true)
@@ -234,7 +256,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "PokemonDetailVC" {
+        if segue.identifier == SEGUE_DETAILVC {
             if let detailsVC = segue.destinationViewController as? PokemonDetailVC {
                 if let poke = sender as? Pokemon {
                     detailsVC.pokemon = poke

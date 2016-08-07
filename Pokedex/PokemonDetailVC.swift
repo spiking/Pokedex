@@ -11,19 +11,16 @@ import MBProgressHUD
 
 class PokemonDetailVC: UIViewController {
     
-    //    @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var mainImg: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var typeLbl: UILabel!
     @IBOutlet weak var defenseLbl: UILabel!
     @IBOutlet weak var heightLbl: UILabel!
     @IBOutlet weak var pokedexLbl: UILabel!
-    @IBOutlet weak var currentEvoImg: UIImageView!
     @IBOutlet weak var nextEvoImg: UIImageView!
     @IBOutlet weak var evoLbl: UILabel!
     @IBOutlet weak var weightLbl: UILabel!
     @IBOutlet weak var baseAttack: UILabel!
-    
     
     private var hud = MBProgressHUD()
     var pokemon: Pokemon!
@@ -32,20 +29,13 @@ class PokemonDetailVC: UIViewController {
         super.viewDidLoad()
         
         title = pokemon.name.capitalizedString
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        
-        
         let img = UIImage(named: "\(pokemon.pokedexId)")
         mainImg.image = img
-        
-        
         
         if isDataSet() {
             self.updateUI()
         } else {
-            
             showDownloadIndicator()
-            
             pokemon.downloadPokemonDetails { () -> () in
                 self.updateUI()
             }
@@ -54,8 +44,8 @@ class PokemonDetailVC: UIViewController {
     
     func showDownloadIndicator() {
         hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-        hud.backgroundColor = UIColor.whiteColor()
-        hud.color = UIColor.lightGrayColor()
+        hud.backgroundColor = UIColor(red: 239/255, green: 83/255, blue: 80/255, alpha: 1.0)
+        hud.color = UIColor.clearColor()
         hud.square = true
     }
     
@@ -128,15 +118,7 @@ class PokemonDetailVC: UIViewController {
             descriptionTextView.text = pokemon.description
         }
         
-        descriptionTextView.font = UIFont(name: "Avenir-Medium", size: 15)
-        
-        
-        //        typeLbl.text = pokemon.type
-        //        defenseLbl.text = pokemon.defense
-        //        heightLbl.text = pokemon.height
-        //        weightLbl.text = pokemon.weight
-        //        baseAttack.text = pokemon.attack
-        
+        descriptionTextView.font = UIFont(name: "Avenir-Book", size: 15)
         pokedexLbl.text = "\(pokemon.pokedexId)"
         
         if let nextEvolutionId = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_evolutionId") as? String {
