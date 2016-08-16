@@ -9,9 +9,12 @@
 import UIKit
 import MBProgressHUD
 
-class PokemonDetailVC: UIViewController {
+class PokemonDetailVC: UIViewController, UIScrollViewDelegate {
     
+    @IBOutlet weak var evolutionView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var mainImg: UIImageView!
+    
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var typeLbl: UILabel!
     @IBOutlet weak var defenseLbl: UILabel!
@@ -21,12 +24,18 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var evoLbl: UILabel!
     @IBOutlet weak var weightLbl: UILabel!
     @IBOutlet weak var baseAttack: UILabel!
+    @IBOutlet weak var speedLbl: UILabel!
+    @IBOutlet weak var expLbl: UILabel!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var contentViewHeight: NSLayoutConstraint!
     private var hud = MBProgressHUD()
     var pokemon: Pokemon!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        scrollView.delegate = self
         
         title = pokemon.name.capitalizedString
         let img = UIImage(named: "\(pokemon.pokedexId)")
@@ -40,6 +49,21 @@ class PokemonDetailVC: UIViewController {
                 self.updateUI()
             }
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if nextEvoImg.hidden {
+            bottomConstraint.constant = 0
+            contentViewHeight.constant = 516
+        } else {
+            
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        descriptionTextView.setContentOffset(CGPointZero, animated: false)
     }
     
     func showDownloadIndicator() {
@@ -60,8 +84,12 @@ class PokemonDetailVC: UIViewController {
                     if NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_defense") != nil {
                         if NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_description") != nil {
                             if NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_type") != nil {
-                                print("ALL DATA IS SET!")
-                                return true
+                                if NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_exp") != nil {
+                                    if NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_speed") != nil {
+                                        print("ALL DATA IS SET!")
+                                        return true
+                                    }
+                                }
                             }
                         }
                     }
@@ -76,17 +104,17 @@ class PokemonDetailVC: UIViewController {
     func updateUI() {
         
         if let weight = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_weight") as? String {
-            weightLbl.text = weight
+            weightLbl.text = weight + " kg"
             print("Loaded from db")
         } else {
-            weightLbl.text = pokemon.weight
+            weightLbl.text = pokemon.weight + " kg"
         }
         
         if let height = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_height") as? String {
-            heightLbl.text = height
+            heightLbl.text = height + " m"
             print("Loaded from db")
         } else {
-            heightLbl.text = pokemon.height
+            heightLbl.text = pokemon.height + " m"
         }
         
         if let attack = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_attack") as? String {
@@ -110,6 +138,19 @@ class PokemonDetailVC: UIViewController {
             typeLbl.text = pokemon.type
         }
         
+        if let speed = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_speed") as? String {
+            speedLbl.text = speed
+            print("Loaded from db")
+        } else {
+            speedLbl.text = pokemon.speed
+        }
+        
+        if let exp = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_exp") as? String {
+            expLbl.text = exp
+            print("Loaded from db")
+        } else {
+            expLbl.text = pokemon.exp
+        }
         
         if let description = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_description") as? String {
             descriptionTextView.text = description
@@ -119,6 +160,7 @@ class PokemonDetailVC: UIViewController {
         }
         
         descriptionTextView.font = UIFont(name: "Avenir-Book", size: 15)
+
         pokedexLbl.text = "\(pokemon.pokedexId)"
         
         if let nextEvolutionId = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_evolutionId") as? String {
@@ -137,20 +179,10 @@ class PokemonDetailVC: UIViewController {
             
         } else {
             evoLbl.text = "Max Evolution"
-            nextEvoImg.image = UIImage(named: "\(pokemon.pokedexId)")
+            nextEvoImg.hidden = true
+//            nextEvoImg.image = UIImage(named: "\(pokemon.pokedexId)")
         }
         
         dismissDownloadIndicator()
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func backBtnPressed(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    
 }

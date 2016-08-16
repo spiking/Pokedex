@@ -35,7 +35,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         searchBar.barTintColor = UIColor.clearColor()
         searchBar.backgroundImage = UIImage()
         searchBar.translucent = false
-//        searchBar.tintColor = UIColor.greenColor()
         
         searchBar.layer.borderWidth = 1
         searchBar.layer.borderColor = UIColor(red: 239/255, green: 83/255, blue: 80/255, alpha: 1.0).CGColor
@@ -48,7 +47,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if let textFieldInsideSearchBar = self.searchBar.valueForKey("searchField") as? UITextField,
             let glassIconView = textFieldInsideSearchBar.leftView as? UIImageView {
             
-            //Magnifying glass
             glassIconView.image = glassIconView.image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             glassIconView.tintColor = UIColor.whiteColor()
             

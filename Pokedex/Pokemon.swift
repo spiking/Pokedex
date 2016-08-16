@@ -24,6 +24,8 @@ class Pokemon {
     private var _nextEvolutionId: String!
     private var _nextEvolutionLvl: String!
     private var _pokemonUrl: String!
+    private var _speed: String!
+    private var _exp: String!
     
     var nextEvolutionLvl: String {
         get {
@@ -102,6 +104,21 @@ class Pokemon {
         return _pokedexId
     }
     
+    var speed: String {
+        if _speed == nil {
+            _speed = ""
+        }
+        
+        return _speed
+    }
+    
+    var exp: String {
+        if _exp == nil {
+            _exp = ""
+        }
+        return _exp
+    }
+    
     init(name: String, pokedexId: Int) {
         self._name = name
         self._pokedexId = pokedexId
@@ -130,16 +147,20 @@ class Pokemon {
 
             if let dict = result.value as? Dictionary<String, AnyObject> {
                 
+                print(dict)
                 
                 if let weight = dict["weight"] as? String {
-                    self._weight = "\(weight)"
-                    NSUserDefaults.standardUserDefaults().setValue(weight, forKey: "\(self.pokedexId)_weight")
-                    
+                    let weightInKilogram = Double(weight)! * 0.454
+                    let weightRounded = Double(round(10*weightInKilogram)/10)
+                    self._weight = "\(weightRounded)"
+                    NSUserDefaults.standardUserDefaults().setValue("\(weightInKilogram)", forKey: "\(self.pokedexId)_weight")
                 }
                 
                 if let height = dict["height"] as? String {
-                    self._height = "\(height)"
-                    NSUserDefaults.standardUserDefaults().setValue(height, forKey: "\(self.pokedexId)_height")
+                    let heightInMeters = Double(height)! * 0.305
+                    let heightRounded = Double(round(10*heightInMeters)/10)
+                    self._height = "\(heightRounded)"
+                    NSUserDefaults.standardUserDefaults().setValue("\(heightInMeters)", forKey: "\(self.pokedexId)_height")
                 }
                 
                 if let attack = dict["attack"] as? Int {
@@ -150,6 +171,18 @@ class Pokemon {
                 if let defense = dict["defense"] as? Int {
                     self._defense = "\(defense)"
                     NSUserDefaults.standardUserDefaults().setValue("\(defense)", forKey: "\(self.pokedexId)_defense")
+                }
+                
+                if let speed = dict["speed"] as? Int {
+                    self._speed = "\(speed)"
+                    print(speed)
+                    NSUserDefaults.standardUserDefaults().setValue("\(speed)", forKey: "\(self.pokedexId)_speed")
+                }
+                
+                if let exp = dict["exp"] as? Int {
+                    self._exp = "\(exp)"
+                    print(exp)
+                    NSUserDefaults.standardUserDefaults().setValue("\(exp)", forKey: "\(self.pokedexId)_exp")
                 }
                 
                 NSUserDefaults.standardUserDefaults().setValue(self.pokedexId, forKey: "\(self.pokedexId)")
