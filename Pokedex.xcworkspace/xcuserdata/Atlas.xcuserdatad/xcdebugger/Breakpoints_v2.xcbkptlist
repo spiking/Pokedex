@@ -6,80 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pokedex/PokemonDetailVC.swift"
-            timestampString = "493049237.16256"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pokedex.PokemonDetailVC.viewDidLoad () -&gt; ()"
-                  moduleName = "Pokedex"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Atlas/Documents/UdemyXcodeProjects/Pokedex/Pokedex/PokemonDetailVC.swift"
-                  timestampString = "492275011.478355"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "42"
-                  endingLineNumber = "42"
-                  offsetFromSymbolStart = "1072">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pokedex.PokemonDetailVC.(viewDidLoad () -&gt; ()).(closure #1)"
-                  moduleName = "Pokedex"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Atlas/Documents/UdemyXcodeProjects/Pokedex/Pokedex/PokemonDetailVC.swift"
-                  timestampString = "492275011.47859"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "24">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pokedex/PokemonDetailVC.swift"
-            timestampString = "493049237.16256"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "isDataSet()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pokedex/ViewController.swift"
-            timestampString = "492765538.114647"
+            filePath = "Pokedex/Pokemon.swift"
+            timestampString = "493116516.195187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "initAudio()"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
+            landmarkName = "downloadPokemonDetails(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

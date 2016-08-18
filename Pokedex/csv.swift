@@ -1,7 +1,5 @@
-//
-//  CSV
-//  Modified by Mark Price on 08/14/15
-//
+
+// CSV
 
 import Foundation
 

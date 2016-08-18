@@ -1,10 +1,10 @@
 
 //
 //  Pokemon.swift
-//  pokedex-by-devslopes
+//  Pokedex
 //
-//  Created by Mark Price on 8/14/15.
-//  Copyright © 2015 devslopes. All rights reserved.
+//  Created by Adam Thuvesen on 2016-08-07.
+//  Copyright © 2016 Adam Thuvesen. All rights reserved.
 //
 
 import Foundation
@@ -20,7 +20,7 @@ class Pokemon {
     private var _height: String!
     private var _weight: String!
     private var _attack: String!
-    private var _nextEvolutionTxt: String!
+    private var _nextEvolutionName: String!
     private var _nextEvolutionId: String!
     private var _nextEvolutionLvl: String!
     private var _pokemonUrl: String!
@@ -28,25 +28,21 @@ class Pokemon {
     private var _exp: String!
     
     var nextEvolutionLvl: String {
-        get {
-            if _nextEvolutionLvl == nil {
-                _nextEvolutionLvl = ""
-            }
-            return _nextEvolutionLvl
+        if _nextEvolutionLvl == nil {
+            _nextEvolutionLvl = ""
         }
+        return _nextEvolutionLvl
     }
     
-    var nextEvolutionTxt: String {
-        
-        if _nextEvolutionTxt == nil {
-            _nextEvolutionTxt = ""
+    var nextEvolutionName: String {
+        if _nextEvolutionName == nil {
+            _nextEvolutionName = ""
         }
         
-        return _nextEvolutionTxt
+        return _nextEvolutionName
     }
     
     var nextEvolutionId: String {
-        
         if _nextEvolutionId == nil {
             _nextEvolutionId = ""
         }
@@ -54,7 +50,6 @@ class Pokemon {
     }
     
     var description: String {
-        
         if _description == nil {
             _description = ""
         }
@@ -144,23 +139,21 @@ class Pokemon {
             }
             
             let result = response.result
-
+            
             if let dict = result.value as? Dictionary<String, AnyObject> {
-                
-                print(dict)
                 
                 if let weight = dict["weight"] as? String {
                     let weightInKilogram = Double(weight)! * 0.454
                     let weightRounded = Double(round(10*weightInKilogram)/10)
                     self._weight = "\(weightRounded)"
-                    NSUserDefaults.standardUserDefaults().setValue("\(weightInKilogram)", forKey: "\(self.pokedexId)_weight")
+                    NSUserDefaults.standardUserDefaults().setValue("\(weightRounded)", forKey: "\(self.pokedexId)_weight")
                 }
                 
                 if let height = dict["height"] as? String {
                     let heightInMeters = Double(height)! * 0.305
                     let heightRounded = Double(round(10*heightInMeters)/10)
                     self._height = "\(heightRounded)"
-                    NSUserDefaults.standardUserDefaults().setValue("\(heightInMeters)", forKey: "\(self.pokedexId)_height")
+                    NSUserDefaults.standardUserDefaults().setValue("\(heightRounded)", forKey: "\(self.pokedexId)_height")
                 }
                 
                 if let attack = dict["attack"] as? Int {
@@ -175,18 +168,16 @@ class Pokemon {
                 
                 if let speed = dict["speed"] as? Int {
                     self._speed = "\(speed)"
-                    print(speed)
                     NSUserDefaults.standardUserDefaults().setValue("\(speed)", forKey: "\(self.pokedexId)_speed")
                 }
                 
                 if let exp = dict["exp"] as? Int {
                     self._exp = "\(exp)"
-                    print(exp)
                     NSUserDefaults.standardUserDefaults().setValue("\(exp)", forKey: "\(self.pokedexId)_exp")
                 }
                 
                 NSUserDefaults.standardUserDefaults().setValue(self.pokedexId, forKey: "\(self.pokedexId)")
-
+                
                 if let types = dict["types"] as? [Dictionary<String, String>] where types.count > 0 {
                     
                     if let name = types[0]["name"] {
@@ -207,26 +198,26 @@ class Pokemon {
                 } else {
                     self._type = ""
                 }
-
-                if let evolutions = dict["evolutions"] as? [Dictionary<String,AnyObject>] where evolutions.count > 0 {
-                    
-                    if let to = evolutions[0]["to"] as? String {
-                        
-                        // Can't support mega pokemon right now but
                 
-                        if to.rangeOfString("mega") == nil {
-                            
+                if let evolutions = dict["evolutions"] as? [Dictionary<String,AnyObject>] where evolutions.count > 0 && self.notErrorInAPI(self.pokedexId) {
+                    if let pokemonName = evolutions[0]["to"] as? String {
+                        if pokemonName.rangeOfString("mega") == nil {
                             if let uri = evolutions[0]["resource_uri"] as? String {
                                 
-                                let newStr = uri.stringByReplacingOccurrencesOfString("/api/v1/pokemon/", withString: "")
+                                let pokemonStr = uri.stringByReplacingOccurrencesOfString(URL_POKEMON, withString: "")
+                                let id = pokemonStr.stringByReplacingOccurrencesOfString("/", withString: "")
                                 
-                                let num = newStr.stringByReplacingOccurrencesOfString("/", withString: "")
+                                self._nextEvolutionName = pokemonName
+                                self._nextEvolutionId = id
                                 
-                                self._nextEvolutionId = num
-                                self._nextEvolutionTxt = to
+                                // Change Polywhirl evolution from Polytoed to Poliwrath (Old school style)
+                                if pokemonName == "Politoed" {
+                                    self._nextEvolutionName = "Poliwrath"
+                                    self._nextEvolutionId = "62"
+                                }
                                 
                                 NSUserDefaults.standardUserDefaults().setValue(self._nextEvolutionId, forKey: "\(self.pokedexId)_evolutionId")
-                                NSUserDefaults.standardUserDefaults().setValue(self._nextEvolutionTxt, forKey: "\(self.pokedexId)_evolutionText")
+                                NSUserDefaults.standardUserDefaults().setValue(self._nextEvolutionName, forKey: "\(self.pokedexId)_evolutionName")
                                 
                                 if let lvl = evolutions[0]["level"] as? Int {
                                     self._nextEvolutionLvl = "\(lvl)"
@@ -261,10 +252,18 @@ class Pokemon {
                     self._description = ""
                     completed()
                 }
-
             }
             
         }
+    }
+    
+    // Errors in the API
+    
+    func notErrorInAPI(id: Int) -> Bool {
+        if id == 24 || id == 34 || id == 38 || id == 112 || id == 121 {
+            return false
+        }
+        return true
     }
 }
 

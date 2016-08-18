@@ -1,9 +1,9 @@
 //
 //  Constants.swift
-//  pokedex-by-devslopes
+//  Pokedex
 //
-//  Created by Mark Price on 8/15/15.
-//  Copyright © 2015 devslopes. All rights reserved.
+//  Created by Adam Thuvesen on 2016-08-07.
+//  Copyright © 2016 Adam Thuvesen. All rights reserved.
 //
 
 import Foundation

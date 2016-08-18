@@ -1,9 +1,9 @@
 //
 //  InfoVC.swift
-//  pokedex-by-devslopes
+//  Pokedex
 //
 //  Created by Adam Thuvesen on 2016-08-07.
-//  Copyright © 2016 devslopes. All rights reserved.
+//  Copyright © 2016 Adam Thuvesen. All rights reserved.
 //
 
 import UIKit
@@ -20,5 +20,4 @@ class InfoVC: UIViewController {
     override func viewDidLayoutSubviews() {
         textView.setContentOffset(CGPointZero, animated: false)
     }
-
 }

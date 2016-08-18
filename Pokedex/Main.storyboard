@@ -359,8 +359,8 @@ The franchise celebrated its tenth anniversary in 2006. The twentieth anniversar
                                                     <constraint firstAttribute="height" constant="1" id="ate-MY-UVx"/>
                                                 </constraints>
                                             </view>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zq0-yP-WFZ">
-                                                <rect key="frame" x="16" y="244" width="562" height="66"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zq0-yP-WFZ">
+                                                <rect key="frame" x="19" y="244" width="562" height="66"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="66" id="LDj-hs-HNh"/>
                                                 </constraints>
@@ -393,7 +393,7 @@ The franchise celebrated its tenth anniversary in 2006. The twentieth anniversar
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Description:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JBW-UJ-oaf">
-                                                <rect key="frame" x="20" y="216" width="105" height="20"/>
+                                                <rect key="frame" x="17" y="216" width="105" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="bKw-qg-s5w"/>
                                                 </constraints>
@@ -469,6 +469,7 @@ The franchise celebrated its tenth anniversary in 2006. The twentieth anniversar
                                             <constraint firstItem="GFQ-lA-f9M" firstAttribute="centerY" secondItem="1ST-jR-dln" secondAttribute="centerY" id="bCb-zW-Eo3"/>
                                             <constraint firstItem="8hY-Na-a3a" firstAttribute="leading" secondItem="ZHg-mh-Mri" secondAttribute="trailing" constant="10" id="df3-bz-7Dd"/>
                                             <constraint firstItem="ryN-Km-WPu" firstAttribute="centerY" secondItem="E6h-kE-0j6" secondAttribute="centerY" id="eiU-A7-Rsu"/>
+                                            <constraint firstItem="JBW-UJ-oaf" firstAttribute="leading" secondItem="SIp-SZ-A8u" secondAttribute="leading" constant="17" id="el1-nb-kt3"/>
                                             <constraint firstItem="xay-1l-k7D" firstAttribute="top" secondItem="Tie-ZO-e2E" secondAttribute="bottom" constant="12" id="elg-p9-ppQ"/>
                                             <constraint firstItem="1ST-jR-dln" firstAttribute="leading" secondItem="SIp-SZ-A8u" secondAttribute="leading" constant="19" id="er2-Rz-Zpa"/>
                                             <constraint firstItem="nB8-bw-kDD" firstAttribute="centerX" secondItem="SIp-SZ-A8u" secondAttribute="centerX" id="erQ-61-jsK"/>
@@ -482,7 +483,7 @@ The franchise celebrated its tenth anniversary in 2006. The twentieth anniversar
                                             <constraint firstItem="NO6-Na-hZL" firstAttribute="leading" secondItem="SIp-SZ-A8u" secondAttribute="leading" constant="19" id="hLG-aZ-WwX"/>
                                             <constraint firstItem="8hY-Na-a3a" firstAttribute="centerY" secondItem="9Pd-WK-zeW" secondAttribute="centerY" id="jyU-kL-o9o"/>
                                             <constraint firstItem="pAV-sA-fkO" firstAttribute="top" secondItem="qwe-cv-mNC" secondAttribute="bottom" constant="12" id="kNf-PM-5ee"/>
-                                            <constraint firstItem="zq0-yP-WFZ" firstAttribute="leading" secondItem="SIp-SZ-A8u" secondAttribute="leading" constant="16" id="lsc-uL-Wmq"/>
+                                            <constraint firstItem="zq0-yP-WFZ" firstAttribute="leading" secondItem="SIp-SZ-A8u" secondAttribute="leading" constant="17" id="lsc-uL-Wmq"/>
                                             <constraint firstItem="ZHg-mh-Mri" firstAttribute="centerY" secondItem="9Pd-WK-zeW" secondAttribute="centerY" id="ngd-o5-J0b"/>
                                             <constraint firstItem="gQg-4J-ulo" firstAttribute="centerY" secondItem="1ST-jR-dln" secondAttribute="centerY" id="oPS-zb-tHQ"/>
                                             <constraint firstItem="E6h-kE-0j6" firstAttribute="top" secondItem="9Pd-WK-zeW" secondAttribute="bottom" constant="12" id="oph-Xd-NFj"/>
@@ -500,6 +501,7 @@ The franchise celebrated its tenth anniversary in 2006. The twentieth anniversar
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="Sm8-p6-hOE"/>
                                                 <exclude reference="Nr3-3v-6EM"/>
                                                 <exclude reference="xpZ-AN-zoG"/>
                                                 <exclude reference="Lvi-CV-Ivy"/>

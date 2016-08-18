@@ -1,9 +1,9 @@
 //
 //  PokemonDetailVC.swift
-//  pokedex-by-devslopes
+//  Pokedex
 //
-//  Created by Mark Price on 8/15/15.
-//  Copyright © 2015 devslopes. All rights reserved.
+//  Created by Adam Thuvesen on 2016-08-07.
+//  Copyright © 2016 Adam Thuvesen. All rights reserved.
 //
 
 import UIKit
@@ -14,7 +14,6 @@ class PokemonDetailVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var evolutionView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var mainImg: UIImageView!
-    
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var typeLbl: UILabel!
     @IBOutlet weak var defenseLbl: UILabel!
@@ -27,43 +26,53 @@ class PokemonDetailVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var speedLbl: UILabel!
     @IBOutlet weak var expLbl: UILabel!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var contentViewHeight: NSLayoutConstraint!
+    
     private var hud = MBProgressHUD()
-    var pokemon: Pokemon!
+    private var _pokemon: Pokemon!
+    
+    var pokemon: Pokemon {
+        get {
+            return _pokemon
+        }
+        
+        set {
+            _pokemon = newValue
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        scrollView.delegate = self
-        
+    
         title = pokemon.name.capitalizedString
         let img = UIImage(named: "\(pokemon.pokedexId)")
         mainImg.image = img
         
         if isDataSet() {
             self.updateUI()
+            self.setConstraint()
         } else {
             showDownloadIndicator()
             pokemon.downloadPokemonDetails { () -> () in
                 self.updateUI()
+                self.setConstraint()
             }
         }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if nextEvoImg.hidden {
-            bottomConstraint.constant = 0
-            contentViewHeight.constant = 516
-        } else {
-            
-        }
     }
     
     override func viewDidLayoutSubviews() {
         descriptionTextView.setContentOffset(CGPointZero, animated: false)
+    }
+    
+    func setConstraint() {
+        if nextEvoImg.hidden {
+            bottomConstraint.constant = 0
+            contentViewHeight.constant = 516
+        }
     }
     
     func showDownloadIndicator() {
@@ -105,82 +114,75 @@ class PokemonDetailVC: UIViewController, UIScrollViewDelegate {
         
         if let weight = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_weight") as? String {
             weightLbl.text = weight + " kg"
-            print("Loaded from db")
         } else {
             weightLbl.text = pokemon.weight + " kg"
         }
         
         if let height = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_height") as? String {
             heightLbl.text = height + " m"
-            print("Loaded from db")
         } else {
             heightLbl.text = pokemon.height + " m"
         }
         
         if let attack = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_attack") as? String {
             baseAttack.text = attack
-            print("Loaded from db")
         } else {
             baseAttack.text = pokemon.attack
         }
         
         if let defense = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_defense") as? String {
             defenseLbl.text = defense
-            print("Loaded from db")
         } else {
             defenseLbl.text = pokemon.defense
         }
         
         if let type = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_type") as? String {
             typeLbl.text = type
-            print("Loaded from db")
         } else {
             typeLbl.text = pokemon.type
         }
         
         if let speed = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_speed") as? String {
             speedLbl.text = speed
-            print("Loaded from db")
         } else {
             speedLbl.text = pokemon.speed
         }
         
         if let exp = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_exp") as? String {
             expLbl.text = exp
-            print("Loaded from db")
         } else {
             expLbl.text = pokemon.exp
         }
         
         if let description = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_description") as? String {
             descriptionTextView.text = description
-            print("Loaded from db")
         } else {
             descriptionTextView.text = pokemon.description
         }
         
         descriptionTextView.font = UIFont(name: "Avenir-Book", size: 15)
+        descriptionTextView.textContainerInset = UIEdgeInsetsZero
+        descriptionTextView.textContainer.lineFragmentPadding = 0;
 
         pokedexLbl.text = "\(pokemon.pokedexId)"
         
         if let nextEvolutionId = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_evolutionId") as? String {
-            if let nextEvolutionText = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_evolutionText") as? String {
-                evoLbl.text = nextEvolutionId
-                print("Loaded from db")
+            if let nextEvolutionName = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_evolutionName") as? String {
                 
+                evoLbl.text = nextEvolutionId
                 nextEvoImg.image = UIImage(named: nextEvolutionId)
-                var str = "Next Evolution: \(nextEvolutionText)"
+                var nextEvo = "Next Evolution: \(nextEvolutionName)"
                 
                 if let nextEvolutionLvl = NSUserDefaults.standardUserDefaults().valueForKey("\(pokemon.pokedexId)_evolutionLvl") as? String {
-                    str += " [Level \(nextEvolutionLvl)]"
-                    evoLbl.text = str
+                    nextEvo += " [Level \(nextEvolutionLvl)]"
                 }
+                
+                evoLbl.text = nextEvo
             }
             
         } else {
             evoLbl.text = "Max Evolution"
             nextEvoImg.hidden = true
-//            nextEvoImg.image = UIImage(named: "\(pokemon.pokedexId)")
         }
         
         dismissDownloadIndicator()
